@@ -1,14 +1,12 @@
 import { AxiosInterceptor } from "../interceptor/axios.interceptor";
-import { ICountry, ICountryPreview, IFlag, IFlagResponse, PopulationResponse } from '@/interfaces/country.interfaces';
+import { ICountry, ICountryPreview, IFlagResponse, PopulationResponse } from '@/interfaces/country.interfaces';
 
 const axios = new AxiosInterceptor().getAxiosInstance();
-/* const api = import.meta.env.VITE_API; */
-const api = 'https://date.nager.at/api/v3';
-const api2 ='https://countriesnow.space/api/v0.1/countries'
+const api = import.meta.env.VITE_API;
 
 export const fetchCountries = async (): Promise<ICountryPreview[]> => {
   try {
-    const response = await axios.get(`${api}/AvailableCountries`);
+    const response = await axios.get(`${api}/api/countries`);
     return response.data;
   } catch (error) {
     console.error('Error fetching countries:', error);
@@ -18,7 +16,7 @@ export const fetchCountries = async (): Promise<ICountryPreview[]> => {
 
 export const fetchCountryByCountryCode = async (countryCode:string): Promise<ICountry> => {
   try {
-    const response = await axios.get(`${api}/CountryInfo/${countryCode}`);
+    const response = await axios.get(`${api}/api/country/${countryCode}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching countries:', error);
@@ -28,7 +26,7 @@ export const fetchCountryByCountryCode = async (countryCode:string): Promise<ICo
 
 export const fetchCountriesFlags = async (): Promise<IFlagResponse> => {
   try {
-    const response = await axios.get(`${api2}/flag/images`);
+    const response = await axios.get(`${api}/api/countries/flags`);
     return response.data;
   } catch (error) {
     console.error('Error fetching countries:', error);
@@ -38,7 +36,7 @@ export const fetchCountriesFlags = async (): Promise<IFlagResponse> => {
 
 export const fetchCountriesPopulation = async (): Promise<PopulationResponse> => {
   try {
-    const response = await axios.get(`${api2}/population`);
+    const response = await axios.get(`${api}/api/countries/population`);
     return response.data;
   } catch (error) {
     console.error('Error fetching countries:', error);
