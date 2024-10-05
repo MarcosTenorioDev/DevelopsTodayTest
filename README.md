@@ -1,6 +1,6 @@
 # DevelopsToday - Junior Developer Test
 
-## Access here: [[https://salvus-teste.vercel.app/](https://salvus-teste.vercel.app/)](https://develops-today-test-bice.vercel.app/)
+## Access here: https://develops-today-test-bice.vercel.app/
 
 ## Features
 
