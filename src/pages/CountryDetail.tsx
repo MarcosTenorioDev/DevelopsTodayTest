@@ -94,121 +94,127 @@ const CoutryDetail = () => {
     fetchCountryFlag();
   }, [country]);
 
-  if (!country) {
-    return <h1>Error: country not found</h1>;
-  }
-
   return (
     <div className="container mx-auto p-4">
-      <Button variant={'link'} className="text-xl pl-0 mb-10 mt-4" onClick={() => navigate('/countries')}>
-        {' '}
-        <ArrowLeftSquare size={25} />
-        Back to Country List
-      </Button>
-      <h1 className="text-5xl font-bold mb-4">Country Info</h1>
-      <div className="mb-4">
-        {loading ? (
-          <div className="flex flex-row justify-between items-center">
-            {' '}
-            <div className="flex flex-col w-full gap-2">
-              <Skeleton className="h-6 w-full max-w-[250px]" />
-              <Skeleton className="h-6 w-full max-w-[400px]" />
-              <Skeleton className="h-6 w-full max-w-[200px]" />
-              <Skeleton className="h-6 w-full max-w-[350px]" />
-            </div>
-            <div>
-              <Skeleton className="aspect-video h-48 rounded-lg" />
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <div>
-              {' '}
-              <h2 className="text-xl">Common Name: {country.commonName}</h2>
-              <p>Official Name: {country.officialName}</p>
-              <p>Country Code: {country.countryCode}</p>
-              <p>Region: {country.region}</p>
-            </div>
-
-            {countryFlag && (
-              <img
-                className="aspect-video h-48 rounded-lg my-10"
-                src={countryFlag?.flag}
-                alt={country.commonName + 'flag'}
-              />
-            )}
-          </div>
-        )}
-      </div>
-      {loading ? (
-        <Skeleton className="aspect-video w-full max-h-[500px] my-16 rounded-lg" />
-      ) : (
+      {country ? (
         <>
           {' '}
-          {countryPopulation && countryPopulation.populationCounts && (
-            <CountryPopulationChart
-              country={countryPopulation.country}
-              code={countryPopulation.code}
-              populationCounts={countryPopulation.populationCounts}
-            />
-          )}
-        </>
-      )}
+          <Button
+            variant={'link'}
+            className="text-xl pl-0 mb-10 mt-4"
+            onClick={() => navigate('/')}
+          >
+            {' '}
+            <ArrowLeftSquare size={25} />
+            Back to Country List
+          </Button>
+          <h1 className="text-5xl font-bold mb-4">Country Info</h1>
+          <div className="mb-4">
+            {loading ? (
+              <div className="flex flex-row justify-between items-center">
+                {' '}
+                <div className="flex flex-col w-full gap-2">
+                  <Skeleton className="h-6 w-full max-w-[250px]" />
+                  <Skeleton className="h-6 w-full max-w-[400px]" />
+                  <Skeleton className="h-6 w-full max-w-[200px]" />
+                  <Skeleton className="h-6 w-full max-w-[350px]" />
+                </div>
+                <div>
+                  <Skeleton className="aspect-video h-48 rounded-lg" />
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row justify-between items-center">
+                <div>
+                  {' '}
+                  <h2 className="text-xl">Common Name: {country.commonName}</h2>
+                  <p>Official Name: {country.officialName}</p>
+                  <p>Country Code: {country.countryCode}</p>
+                  <p>Region: {country.region}</p>
+                </div>
 
-      <h3 className="text-3xl font-semibold mt-10">Borders:</h3>
-      <Table>
-        <TableCaption>A list of countries.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[150px]">Country Name</TableHead>
-            <TableHead>Official Name</TableHead>
-            <TableHead>Country Code</TableHead>
-            <TableHead>Region</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {loading
-            ? Array.from({ length: 10 }).map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-6 w-full" />
-                  </TableCell>
-                </TableRow>
-              ))
-            : country.borders.map((border) => (
-                <TableRow key={border.commonName}>
-                  <TableCell className="font-semibold">
-                    {border.commonName}
-                  </TableCell>
-                  <TableCell>{border.officialName}</TableCell>
-                  <TableCell>{border.countryCode}</TableCell>
-                  <TableCell>{border.region}</TableCell>
-                  <TableCell className="text-right font-semibold">
-                    <Button
-                      onClick={() =>
-                        navigate(`/countries/${border.countryCode}`)
-                      }
-                    >
-                      Show details
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-        </TableBody>
-      </Table>
+                {countryFlag && (
+                  <img
+                    className="aspect-video h-48 rounded-lg my-10"
+                    src={countryFlag?.flag}
+                    alt={country.commonName + 'flag'}
+                  />
+                )}
+              </div>
+            )}
+          </div>
+          {loading ? (
+            <Skeleton className="aspect-video w-full max-h-[500px] my-16 rounded-lg" />
+          ) : (
+            <>
+              {' '}
+              {countryPopulation && countryPopulation.populationCounts && (
+                <CountryPopulationChart
+                  country={countryPopulation.country}
+                  code={countryPopulation.code}
+                  populationCounts={countryPopulation.populationCounts}
+                />
+              )}
+            </>
+          )}
+          <h3 className="text-3xl font-semibold mt-10">Borders:</h3>
+          <Table>
+            <TableCaption>A list of countries.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[150px]">Country Name</TableHead>
+                <TableHead>Official Name</TableHead>
+                <TableHead>Country Code</TableHead>
+                <TableHead>Region</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading
+                ? Array.from({ length: 10 }).map((_, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-6 w-full" />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : country.borders.map((border) => (
+                    <TableRow key={border.commonName}>
+                      <TableCell className="font-semibold">
+                        {border.commonName}
+                      </TableCell>
+                      <TableCell>{border.officialName}</TableCell>
+                      <TableCell>{border.countryCode}</TableCell>
+                      <TableCell>{border.region}</TableCell>
+                      <TableCell className="text-right font-semibold">
+                        <Button
+                          onClick={() =>
+                            navigate(`/countries/${border.countryCode}`)
+                          }
+                        >
+                          Show details
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
