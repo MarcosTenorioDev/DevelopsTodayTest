@@ -8,14 +8,17 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { ICountry, IFlag } from '@/interfaces/country.interfaces';
+import { CountryData, ICountry, IFlag } from '@/interfaces/country.interfaces';
 import {
   fetchCountriesFlags,
+  fetchCountriesPopulation,
   fetchCountryByCountryCode,
 } from '@/services/country.service';
 import { Table } from '@/components/ui/table';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import PopulationChart from '@/components/PopulationChart';
+import CountryPopulationChart from '@/components/PopulationChart';
 
 interface RouteParams extends Record<string, string | undefined> {
   countryCode: string;
@@ -25,6 +28,9 @@ const CoutryDetail = () => {
   const [country, setCountry] = useState<ICountry>();
   const [loading, setLoading] = useState(true);
   const [countryFlag, setCountryFlag] = useState<IFlag | undefined>(undefined);
+  const [countryPopulation, setCountryPopulation] = useState<
+    CountryData | undefined
+  >(undefined);
   const params = useParams<RouteParams>();
   const { countryCode } = params;
   const navigate = useNavigate();
@@ -66,6 +72,24 @@ const CoutryDetail = () => {
       }
     };
 
+    const fetchCountryPopulationData = async () => {
+      try {
+        const populationResponse = await fetchCountriesPopulation();
+        const countriesPopulation = populationResponse.data;
+        if (country) {
+          const countryPopulationData = countriesPopulation.find(
+            (populationData) => populationData.country === country.commonName
+          );
+          if (countryPopulationData) {
+            setCountryPopulation(countryPopulationData);
+          }
+        }
+      } catch (error) {
+      } finally {
+      }
+    };
+
+    fetchCountryPopulationData();
     fetchCountryFlag();
   }, [country]);
 
@@ -110,6 +134,21 @@ const CoutryDetail = () => {
           </div>
         )}
       </div>
+      {loading ? (
+        <Skeleton className="aspect-video w-full max-h-[500px] my-16 rounded-lg" />
+      ) : (
+        <>
+          {' '}
+          {countryPopulation && countryPopulation.populationCounts && (
+            <CountryPopulationChart
+              country={countryPopulation.country}
+              code={countryPopulation.code}
+              populationCounts={countryPopulation.populationCounts}
+            />
+          )}
+        </>
+      )}
+
       <h3 className="text-3xl font-semibold">Borders:</h3>
       <Table>
         <TableCaption>A list of countries.</TableCaption>
