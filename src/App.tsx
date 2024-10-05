@@ -1,12 +1,16 @@
-import React = require("react")
-
+import React from 'react';
+import CountryList from './pages/CountryList';
+import {Routes, Route, BrowserRouter } from 'react-router-dom';
 function App() {
-
   return (
     <>
-     <h1>hello world</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<CountryList />} />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
