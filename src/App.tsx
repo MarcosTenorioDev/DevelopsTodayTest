@@ -1,5 +1,6 @@
 import React from 'react';
 import CountryList from './pages/CountryList';
+import CountryDetail from './pages/CountryDetail';
 import {Routes, Route, BrowserRouter } from 'react-router-dom';
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/countries" element={<CountryList />} />
+          <Route path="/countries/:countryCode" element={<CountryDetail />} />
         </Routes>
       </BrowserRouter>
     </>
