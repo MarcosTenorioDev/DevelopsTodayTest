@@ -115,7 +115,7 @@ const CoutryDetail = () => {
             </div>
           </div>
         ) : (
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
             <div>
               {' '}
               <h2 className="text-xl">Common Name: {country.commonName}</h2>
@@ -126,7 +126,7 @@ const CoutryDetail = () => {
 
             {countryFlag && (
               <img
-                className="aspect-video h-48 rounded-lg"
+                className="aspect-video h-48 rounded-lg my-10"
                 src={countryFlag?.flag}
                 alt={country.commonName + 'flag'}
               />
@@ -149,7 +149,7 @@ const CoutryDetail = () => {
         </>
       )}
 
-      <h3 className="text-3xl font-semibold">Borders:</h3>
+      <h3 className="text-3xl font-semibold mt-10">Borders:</h3>
       <Table>
         <TableCaption>A list of countries.</TableCaption>
         <TableHeader>
