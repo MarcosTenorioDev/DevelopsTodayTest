@@ -2,6 +2,7 @@ import { AxiosInterceptor } from "../interceptor/axios.interceptor";
 import { ICountry, ICountryPreview, IFlag, IFlagResponse, PopulationResponse } from '@/interfaces/country.interfaces';
 
 const axios = new AxiosInterceptor().getAxiosInstance();
+/* const api = import.meta.env.VITE_API; */
 const api = 'https://date.nager.at/api/v3';
 const api2 ='https://countriesnow.space/api/v0.1/countries'
 

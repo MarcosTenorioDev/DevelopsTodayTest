@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "env-cmd -f .env vite",
+    "prod": "env-cmd -f .env.prod vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -17,6 +18,7 @@
     "chart.js": "^4.4.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "env-cmd": "^10.1.0",
     "lucide-react": "^0.447.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
