@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PopulationChart from '@/components/PopulationChart';
 import CountryPopulationChart from '@/components/PopulationChart';
+import { ArrowLeftSquare } from 'lucide-react';
 
 interface RouteParams extends Record<string, string | undefined> {
   countryCode: string;
@@ -99,6 +100,11 @@ const CoutryDetail = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <Button variant={'link'} className="text-xl pl-0 mb-10 mt-4" onClick={() => navigate('/countries')}>
+        {' '}
+        <ArrowLeftSquare size={25} />
+        Back to Country List
+      </Button>
       <h1 className="text-5xl font-bold mb-4">Country Info</h1>
       <div className="mb-4">
         {loading ? (
