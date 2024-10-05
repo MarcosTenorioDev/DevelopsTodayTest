@@ -80,15 +80,15 @@ const CoutryDetail = () => {
         {loading ? (
           <div className="flex flex-row justify-between items-center">
             {' '}
-           <div className='flex flex-col w-full gap-2'>
-           <Skeleton className="h-6 w-full max-w-[250px]" />
-            <Skeleton className="h-6 w-full max-w-[400px]" />
-            <Skeleton className="h-6 w-full max-w-[200px]" />
-            <Skeleton className="h-6 w-full max-w-[350px]" />
-           </div>
-           <div>
-           <Skeleton className="aspect-video h-48 rounded-lg" />
-           </div>
+            <div className="flex flex-col w-full gap-2">
+              <Skeleton className="h-6 w-full max-w-[250px]" />
+              <Skeleton className="h-6 w-full max-w-[400px]" />
+              <Skeleton className="h-6 w-full max-w-[200px]" />
+              <Skeleton className="h-6 w-full max-w-[350px]" />
+            </div>
+            <div>
+              <Skeleton className="aspect-video h-48 rounded-lg" />
+            </div>
           </div>
         ) : (
           <div className="flex justify-between items-center">
@@ -100,7 +100,13 @@ const CoutryDetail = () => {
               <p>Region: {country.region}</p>
             </div>
 
-            <img className="aspect-video h-48 rounded-lg" src={countryFlag?.flag} />
+            {countryFlag && (
+              <img
+                className="aspect-video h-48 rounded-lg"
+                src={countryFlag?.flag}
+                alt={country.commonName + 'flag'}
+              />
+            )}
           </div>
         )}
       </div>
