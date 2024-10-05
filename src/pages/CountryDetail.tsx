@@ -8,8 +8,11 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { ICountry } from '@/interfaces/country.interfaces';
-import { fetchCountryByCountryCode } from '@/services/country.service';
+import { ICountry, IFlag } from '@/interfaces/country.interfaces';
+import {
+  fetchCountriesFlags,
+  fetchCountryByCountryCode,
+} from '@/services/country.service';
 import { Table } from '@/components/ui/table';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +24,7 @@ interface RouteParams extends Record<string, string | undefined> {
 const CoutryDetail = () => {
   const [country, setCountry] = useState<ICountry>();
   const [loading, setLoading] = useState(true);
+  const [countryFlag, setCountryFlag] = useState<IFlag | undefined>(undefined);
   const params = useParams<RouteParams>();
   const { countryCode } = params;
   const navigate = useNavigate();
@@ -47,6 +51,24 @@ const CoutryDetail = () => {
     loadCountry();
   }, [countryCode]);
 
+  useEffect(() => {
+    const fetchCountryFlag = async () => {
+      try {
+        const flagsResponse = await fetchCountriesFlags();
+        const flags = flagsResponse.data;
+        if (country) {
+          setCountryFlag(
+            flags.find((flag) => flag.name === country?.commonName)
+          );
+        }
+      } catch (error) {
+      } finally {
+      }
+    };
+
+    fetchCountryFlag();
+  }, [country]);
+
   if (!country) {
     return <h1>Error: country not found</h1>;
   }
@@ -56,20 +78,30 @@ const CoutryDetail = () => {
       <h1 className="text-5xl font-bold mb-4">Country Info</h1>
       <div className="mb-4">
         {loading ? (
-          <div className='flex flex-col gap-2 '>
+          <div className="flex flex-row justify-between items-center">
             {' '}
-            <Skeleton className="h-6 w-full max-w-[250px]" />
+           <div className='flex flex-col w-full gap-2'>
+           <Skeleton className="h-6 w-full max-w-[250px]" />
             <Skeleton className="h-6 w-full max-w-[400px]" />
             <Skeleton className="h-6 w-full max-w-[200px]" />
             <Skeleton className="h-6 w-full max-w-[350px]" />
+           </div>
+           <div>
+           <Skeleton className="aspect-video h-48 rounded-lg" />
+           </div>
           </div>
         ) : (
-          <>
-            <h2 className="text-xl">Common Name: {country.commonName}</h2>
-            <p>Official Name: {country.officialName}</p>
-            <p>Country Code: {country.countryCode}</p>
-            <p>Region: {country.region}</p>
-          </>
+          <div className="flex justify-between items-center">
+            <div>
+              {' '}
+              <h2 className="text-xl">Common Name: {country.commonName}</h2>
+              <p>Official Name: {country.officialName}</p>
+              <p>Country Code: {country.countryCode}</p>
+              <p>Region: {country.region}</p>
+            </div>
+
+            <img className="aspect-video h-48 rounded-lg" src={countryFlag?.flag} />
+          </div>
         )}
       </div>
       <h3 className="text-3xl font-semibold">Borders:</h3>
