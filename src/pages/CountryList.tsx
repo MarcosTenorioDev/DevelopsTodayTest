@@ -70,7 +70,7 @@ const CountryInfoPage = () => {
           ) : (
             countries.map((country) => (
               <TableRow key={country.countryCode}>
-                <TableCell className="font-semibold">{country.name}</TableCell>
+                <TableCell className="font-semibold hover:underline cursor-pointer" onClick={() => navigateToDetails(country.countryCode)}>{country.name}</TableCell>
                 <TableCell>{country.countryCode}</TableCell>
                 <TableCell className="text-right font-semibold">
                   <Button onClick={() => navigateToDetails(country.countryCode)}>Show details</Button>
