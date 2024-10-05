@@ -3,7 +3,9 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "target": "esnext",
     "module": "esnext",
@@ -13,6 +15,6 @@
     "moduleResolution": "node",
   }
   ,
-  "include": ["src"]
+  "include": ["src", "components/ui"]
 }
 
